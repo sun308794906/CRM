@@ -1,4 +1,4 @@
 /CRM/jxcrm/migrations
 /CRM/CRM/__pycache__
 /CRM/db.sqlite3
-/.vscode\launch.json
+/.vscode/launch.json
