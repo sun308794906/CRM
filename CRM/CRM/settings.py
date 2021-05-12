@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -54,7 +55,7 @@ ROOT_URLCONF = 'CRM.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,6 +78,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        #  'ENGINE':'django.db.backends.mysql',      #数据引擎
+        #  'HOST':'127.0.0.1',                       #数据库主机
+        #  'PORT':'3306',                            #数据端口
+        #  'USER':'xxxx',                            #数据用户
+        #  'PASSWORD':'123456',                      #数据库密码
+        #  'NAME':'xxx'  ,                           #数据库名称
+        #  'ATOMIC_REQUESTS': True                   #全局生效自动提交事务
     }
 }
 
@@ -111,7 +119,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False #使用系统当前时间
 
 
 # Static files (CSS, JavaScript, Images)
@@ -119,7 +127,36 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static')
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            #将日志消息输出到终端的日志记录处理程序 
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+        },
+    },
+    'loggers': {
+        '':{
+        'handlers': ['console'],
+        'level': 'DEBUG',
+        'propagate': False,
+        },
+        'django.db': {
+            #django还具有数据库级别的日志记录
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
